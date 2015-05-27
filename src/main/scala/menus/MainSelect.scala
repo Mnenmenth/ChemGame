@@ -1,40 +1,39 @@
 package menus
 
-import java.awt.event.MouseEvent
 
-import core.{ChemGame, ImageCache, Image}
+import core.{BuffImg, ChemGame, ImageCache, Image}
 import org.lwjgl.input.Mouse
+import org.lwjgl.opengl.Display
+import org.newdawn.slick.opengl.Texture
 
 /**
  * Created by mnenmenth on 5/26/15.
  */
 object MainSelect {
 
-  //val background = new Image(ImageCache.loadTexture("background.png", "PNG"), ChemGame.WINDOW_WIDTH, ChemGame.WINDOW_HEIGHT)
-  val button = ImageCache.loadTexture("button.png", "PNG")
-  val buttonA = new Image(button, button.getImageWidth, button.getImageHeight)
-  val buttonB = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
-  val buttonC = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
-  val buttonD = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
-  val buttonE = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
-  val buttonF = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
+  val buttonARaw = ImageCache.loadImage("Buttons.png").getSubimage(184, 20, 576, 90)
+  val buttonATex = ImageCache.loadTextureFromBuffImg(buttonARaw)
+  val buttonA = new BuffImg(buttonATex, buttonARaw.getWidth, buttonARaw.getHeight)
+  //val buttonB = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
+  //val buttonC = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
+  //val buttonD = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
+  //val buttonE = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
+  //val buttonF = new Image(ImageCache.loadTexture("button.png", "PNG"), ChemGame.WINDOW_WIDTH/4, ChemGame.WINDOW_HEIGHT/10)
 
   def render: Unit ={
-    buttonA.draw(200, 200)
-  }
+    buttonA.draw((ChemGame.WINDOW_WIDTH*.45).toInt, ChemGame.SCREEN_HEIGHT/6)
+    }
 
   def update: Unit = {
 
     if(Mouse.isButtonDown(0)){
-      val x = Mouse.getX
-      val y = Mouse.getY
-      println("X: " + x + " Y: " + y)
-      println("ButtonX: " + buttonA.xPos + " ButtonY: " + buttonA.yPos)
-      println("ModX: " + (buttonA.xPos + buttonA.imgWidth) + " ModY: " + (buttonA.xPos - buttonA.imgHeight))
-      println("")
+      val mx = Mouse.getX
+      val my = ChemGame.WINDOW_HEIGHT - Mouse.getY
+
+      val buttonABool = mx >= buttonA.xPos && mx <= (buttonA.xPos + buttonA.getWidth) && my >= buttonA.yPos && my <= (buttonA.yPos + buttonA.getHeight)
 
       //ButtonA
-      if(x >= buttonA.xPos && x <= (buttonA.xPos + buttonA.imgWidth) && y >= buttonA.yPos && y <= (buttonA.yPos + buttonA.imgHeight)){
+      if(buttonABool){
         System.out.println("Hi")
       }
 

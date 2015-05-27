@@ -67,51 +67,52 @@ object ImageCache {
 
 class Image(tex: Texture, width: Float, height: Float){
 
-  var imgHeight = tex.getImageHeight
-  var imgWidth = tex.getImageWidth
+  var getHeight = tex.getImageHeight
+  var getWidth = tex.getImageWidth
   var xPos = 0
   var yPos = 0
 
   def draw(x: Int, y: Int): Unit ={
     glPushMatrix()
+    tex.bind()
+    glBegin(GL_QUADS)
+      glTexCoord2f(0, 1)
+      glVertex2f(x, y + height)
+
+      glTexCoord2f(1, 1)
+      glVertex2f(x + width, y + height)
+
+      glTexCoord2f(1, 0)
+      glVertex2f(x + width, y)
+    glEnd()
+    glPopMatrix()
     xPos = x
     yPos = y
-    tex.bind()
-    glTranslatef(x, y, 0)
-    glBegin(GL_QUADS)
-        glTexCoord2f(0, 0)
-        glVertex2f(0, 0)
-        glTexCoord2f(1, 0)
-        glVertex2f(width, 0)
-        glTexCoord2f(1, 1)
-        glVertex2f(width, height)
-        glTexCoord2f(0, 1)
-        glVertex2f(0, height)
-        glLoadIdentity()
-      glEnd()
-    glPopMatrix()
   }
 }
 
 class BuffImg(id: Int, width: Float, height: Float){
 
-  def draw(x: Float, y: Float): Unit ={
-    if(id!=0){
+  val getHeight = height
+  val getWidth = width
+  var xPos = 0
+  var yPos = 0
+
+  def draw(x: Int, y: Int): Unit ={
       glPushMatrix()
       glBindTexture(GL_TEXTURE_2D, id)
-      glTranslatef(x, y, 0)
-      glBegin(GL_QUADS)
-      glTexCoord2f(0, 0)
-      glVertex2f(0, 0)
-      glTexCoord2f(1, 0)
-      glVertex2f(width, 0)
-      glTexCoord2f(1, 1)
-      glVertex2f(width, height)
-      glTexCoord2f(0, 1)
-      glVertex2f(0, height)
-      glLoadIdentity()
-      glEnd()
+        glBegin(GL_QUADS)
+        glTexCoord2f(0, 1)
+        glVertex2f(x, y + height)
+
+        glTexCoord2f(1, 1)
+        glVertex2f(x + width, y + height)
+
+        glTexCoord2f(1, 0)
+        glVertex2f(x + width, y)
+        glEnd()
       glPopMatrix()
-    }
+      xPos = x
+      yPos = y
   }
 }
