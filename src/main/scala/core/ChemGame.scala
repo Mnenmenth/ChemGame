@@ -6,6 +6,7 @@ import javax.swing.JFrame
 
 import menus.MainSelect
 import org.lwjgl.LWJGLException
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.DisplayMode
 import org.lwjgl.opengl.GL11._
@@ -29,9 +30,10 @@ object ChemGame{
 
   def CENTER_WIDTH = WINDOW_WIDTH / 4
 
+  var quit = false
   def main(args: Array[String]): Unit ={
     glInit
-    while(!Display.isCloseRequested){
+    while(!quit){
 
       render
       update
@@ -46,8 +48,9 @@ object ChemGame{
   def glInit: Unit ={
     Display.setTitle("Chem Game")
     try {
-      Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT))
+      //Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT))
       Display.setVSyncEnabled(true)
+      Display.setFullscreen(true)
       Display.create()
     } catch {
       case e: LWJGLException => System.out.println(e.printStackTrace())
@@ -61,18 +64,34 @@ object ChemGame{
     glEnable(GL_TEXTURE_2D)
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-    glClearColor(0f, 0f, 0f, 0f)
+    glClearColor(200f, 200f, 200f, 200f)
   }
+
+  var game = false
+  var main = true
+  var a = false
+  var b = false
+  var c = false
+  var d = false
+  var e = false
+  var f = false
 
   def render: Unit ={
     glClear(GL_COLOR_BUFFER_BIT)
-    Player.render
-    MainSelect.render
+    if(game) Player.render
+    if(main) MainSelect.render
+    if(a){}
+    if(b){}
+    if(c){}
+    if(d){}
+    if(e){}
+    if(f){}
   }
 
   def update: Unit ={
     Player.update()
     MainSelect.update
+    if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) quit = true
   }
 
 }
