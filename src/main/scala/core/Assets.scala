@@ -7,7 +7,7 @@ import javax.imageio.ImageIO
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.opengl.GL12
-import org.newdawn.slick.opengl.{TextureLoader, Texture}
+import org.newdawn.slick.opengl.{Texture, TextureLoader}
 import org.newdawn.slick.util.ResourceLoader
 
 import scala.collection.mutable
@@ -72,53 +72,30 @@ class Image(tex: Int, width: Float, height: Float){
   var xPos = 0
   var yPos = 0
 
-  def draw(x: Int, y: Int): Unit ={
+  def setPos(x: Int, y: Int): Unit ={
+    xPos = x
+    yPos = y
+  }
+
+  def draw: Unit ={
     glPushMatrix()
     glBindTexture(GL_TEXTURE_2D, tex)
     glBegin(GL_QUADS)
       glTexCoord2f(0,0)
-      glVertex2f(x, y)
+      glVertex2f(xPos, yPos)
 
       glTexCoord2f(0, 1)
-      glVertex2f(x, y + height)
+      glVertex2f(xPos, yPos + height)
 
       glTexCoord2f(1, 1)
-      glVertex2f(x + width, y + height)
+      glVertex2f(xPos + width, yPos + height)
 
       glTexCoord2f(1, 0)
-      glVertex2f(x + width, y)
+      glVertex2f(xPos + width, yPos)
     glEnd()
     glPopMatrix()
-    xPos = x
-    yPos = y
   }
+  var op: () => Any = null
+  def setOp(operation: => Any) = op = () => operation
+  def doOp = op()
 }
-
-/*class BuffImg(id: Int, width: Float, height: Float){
-
-  val getHeight = height
-  val getWidth = width
-  var xPos = 0
-  var yPos = 0
-
-  def draw(x: Int, y: Int): Unit ={
-    glPushMatrix()
-    glBindTexture(GL_TEXTURE_2D, id)
-      glBegin(GL_QUADS)
-      glTexCoord2f(0, 0)
-      glVertex2f(x, y)
-
-      glTexCoord2f(0, 1)
-      glVertex2f(x, y + height)
-
-      glTexCoord2f(1, 1)
-      glVertex2f(x + width, y + height)
-
-      glTexCoord2f(1, 0)
-      glVertex2f(x + width, y)
-      glEnd()
-    glPopMatrix()
-    xPos = x
-    yPos = y
-  }
-}*/

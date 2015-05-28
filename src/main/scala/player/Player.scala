@@ -1,6 +1,6 @@
 package player
 
-import core.{ChemGame, ImageCache, Image}
+import core.{ChemGame, Image, ImageCache}
 import org.lwjgl.input.Keyboard
 
 /**
@@ -10,10 +10,10 @@ import org.lwjgl.input.Keyboard
 object Player{
   var x = ChemGame.CENTER_WIDTH
   var y = ChemGame.CENTER_HEIGHT
-  val player = new Image(ImageCache.loadTexture("player.png", "PNG").getTextureID, ChemGame.WINDOW_WIDTH / 11, ChemGame.WINDOW_HEIGHT / 8)
+  val player = new Image(ImageCache.loadTexture("player.png", "PNG").getTextureID, ChemGame.WINDOW_WIDTH / 18, ChemGame.WINDOW_HEIGHT / 8)
 
   def render: Unit ={
-    player.draw(x, y)
+    player.draw
   }
 
   def update(): Unit ={
@@ -21,6 +21,7 @@ object Player{
     if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y += 2
     if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 2
     if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 2
+    player.setPos(x, y)
   }
 
 }
