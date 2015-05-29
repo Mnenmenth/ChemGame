@@ -1,5 +1,5 @@
 package core
-import menus.MainSelect
+import menus.{MenuA, MainSelect}
 import org.lwjgl.LWJGLException
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.{Display, DisplayMode}
@@ -60,7 +60,7 @@ object ChemGame{
     glClearColor(1f, 1f, 1f, 1f)
   }
 
-  var game = false
+  var player = false
   var mainSelect = true
   var a = false
   var b = false
@@ -71,9 +71,9 @@ object ChemGame{
 
   def render: Unit ={
     glClear(GL_COLOR_BUFFER_BIT)
-    if(game) Player.render
+    if(player) Player.render
     if(mainSelect) MainSelect.render
-    if(a){}
+    if(a) MenuA.render
     if(b){}
     if(c){}
     if(d){}
@@ -82,8 +82,9 @@ object ChemGame{
   }
 
   def update: Unit ={
-    if(game) Player.update()
+    if(player) Player.update()
     if(mainSelect) MainSelect.update
+    if(a) MenuA.update
     if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) quit = true
     if(Display.isCloseRequested) quit = true
   }

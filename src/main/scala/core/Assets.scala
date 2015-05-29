@@ -1,5 +1,6 @@
 package core
 
+import java.awt.Font
 import java.awt.image.BufferedImage
 import java.nio.ByteBuffer
 import javax.imageio.ImageIO
@@ -7,10 +8,12 @@ import javax.imageio.ImageIO
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.opengl.GL12
+import org.newdawn.slick.{Color, TrueTypeFont}
 import org.newdawn.slick.opengl.{Texture, TextureLoader}
 import org.newdawn.slick.util.ResourceLoader
 
 import scala.collection.mutable
+import scala.util.Random
 
 /**
  * Created by mnenmenth on 5/26/15.
@@ -95,7 +98,29 @@ class Image(tex: Int, width: Float, height: Float){
     glEnd()
     glPopMatrix()
   }
+}
+
+class Button(tex: Int, width: Float, height: Float) extends Image(tex, width, height) {
   var op: () => Any = null
   def setOp(operation: => Any) = op = () => operation
   def doOp = op()
+
+}
+
+class MultChoiceQ(x: Int, y: Int){
+
+
+  def addQ(question: String, choices: Array[String], answers: Array[String]): Unit ={
+
+  }
+
+  val answer = null
+
+  val rand = new Random()
+  val index = rand.nextInt(choices.length)
+
+  def draw: Unit ={
+    //font.drawString(x, y, choices(index))
+  }
+
 }
