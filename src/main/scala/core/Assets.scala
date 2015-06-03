@@ -106,21 +106,3 @@ class Button(tex: Int, width: Float, height: Float) extends Image(tex, width, he
   def doOp = op()
 
 }
-
-class MultChoiceQ(x: Int, y: Int){
-
-
-  def addQ(question: String, choices: Array[String], answers: Array[String]): Unit ={
-
-  }
-
-  val answer = null
-
-  val rand = new Random()
-  val index = rand.nextInt(choices.length)
-
-  def draw: Unit ={
-    //font.drawString(x, y, choices(index))
-  }
-
-}

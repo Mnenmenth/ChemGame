@@ -9,10 +9,10 @@ import org.lwjgl.input.Mouse
  */
 object MenuA {
 
-  val test = new MultChoiceQ(Array("Hi", "no"), ChemGame.CENTER_WIDTH, ChemGame.CENTER_HEIGHT)
+
 
   def render: Unit ={
-    test.draw
+
   }
 
   def update: Unit ={
