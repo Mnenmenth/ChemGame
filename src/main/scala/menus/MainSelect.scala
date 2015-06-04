@@ -1,7 +1,7 @@
 package menus
 
 
-import core.{Button, ChemGame, Image, ImageCache}
+import core.{Button, ChemGame, ImageCache}
 import org.lwjgl.input.Mouse
 
 /**

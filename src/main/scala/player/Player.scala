@@ -1,38 +1,39 @@
 package player
 
 import core.{ChemGame, Image, ImageCache}
-import org.lwjgl.input.{Mouse, Keyboard}
+import org.lwjgl.input.{Keyboard, Mouse}
 
 /**
  * Created by mnenmenth on 5/26/15.
  */
 
 object Player{
-  var x = ChemGame.CENTER_WIDTH
-  var y = ChemGame.CENTER_HEIGHT
   var mx = 0
   var my = 0
+  var posQueue: Array[(Int, Int)] = Array()
   var pressed = false
-  var done = true
+  var moving = false
   val player = new Image(ImageCache.loadTextureFromBuffImg(ImageCache.loadImage("player.png").getSubimage(47, 29, 212, 690)), ChemGame.WINDOW_WIDTH / 32, ChemGame.WINDOW_HEIGHT / 8)
+  var x = (ChemGame.CENTER_WIDTH*.99).toInt
+  var y = (ChemGame.WINDOW_HEIGHT-player.getHeight-2).toInt
 
   def render: Unit ={
     player.draw
   }
 
   def update(): Unit ={
-    if(Mouse.isButtonDown(0) && ChemGame.player && done){
+    if(Mouse.isButtonDown(0) && ChemGame.player && !moving){
       pressed = !pressed
-      mx = Mouse.getX
-      my = Mouse.getY
+      mx = Mouse.getX.toInt
+      my = Mouse.getY.toInt
     }
     if(Keyboard.isKeyDown(Keyboard.KEY_UP) && y >= 0) y -= 2
     if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) && y + player.getHeight <= ChemGame.WINDOW_HEIGHT) y += 2
     if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) && x >= 0) x -= 2
     if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && x + player.getWidth <= ChemGame.WINDOW_WIDTH) x += 2
-    if(pressed && ChemGame.player && done){
+    if(pressed && ChemGame.player && !moving){
       pressed = !pressed
-      done = false
+      moving = true
       moveTo(mx, ChemGame.WINDOW_HEIGHT - my)
     }
     player.setPos(x, y)
@@ -55,9 +56,10 @@ object Player{
           if (y > y1) y -= 1
         }
       }
+
       println("x: " + x + " x1: " + x1)
       println("y: " + y + " y1: " + y1)
-      done = true
+      moving = false
       join
     }}
     thread.synchronized(true)
@@ -68,5 +70,6 @@ object Player{
   def touchingXBounds: Boolean = (x + player.getWidth == ChemGame.WINDOW_WIDTH) || (x == 0)
   def inYBounds: Boolean = (y + player.getHeight <= ChemGame.WINDOW_HEIGHT) && (y >= 0)
   def touchingYBounds: Boolean = (y + player.getHeight == ChemGame.WINDOW_HEIGHT) || (y == 0)
+  def touchingBounds: Boolean = touchingXBounds && touchingYBounds
 
 }

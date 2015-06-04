@@ -1,19 +1,18 @@
 package core
 
-import java.awt.Font
 import java.awt.image.BufferedImage
 import java.nio.ByteBuffer
 import javax.imageio.ImageIO
 
 import org.lwjgl.BufferUtils
+import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.opengl.GL12
-import org.newdawn.slick.{Color, TrueTypeFont}
-import org.newdawn.slick.opengl.{Texture, TextureLoader}
+import org.newdawn.slick.Color
+import org.newdawn.slick.opengl.{TextureImpl, Texture, TextureLoader}
 import org.newdawn.slick.util.ResourceLoader
 
 import scala.collection.mutable
-import scala.util.Random
 
 /**
  * Created by mnenmenth on 5/26/15.
@@ -104,5 +103,32 @@ class Button(tex: Int, width: Float, height: Float) extends Image(tex, width, he
   var op: () => Any = null
   def setOp(operation: => Any) = op = () => operation
   def doOp = op()
+
+}
+
+class Question(question: String){
+
+  var qMap = mutable.HashMap.empty[String, Boolean]
+  var qMapPos = mutable.HashMap.empty[String, (Int, Int)]
+
+  def addOption(option: String, isAnswer: Boolean) = qMap.update(option, isAnswer)
+  def draw: Unit ={
+    var iteration = .13
+    TextureImpl.bindNone()
+    ChemGame.text.drawString((ChemGame.CENTER_WIDTH*.75).toInt,ChemGame.WINDOW_HEIGHT/8, question, Color.red)
+    qMap.foreach{o =>
+      val pos = ((ChemGame.CENTER_WIDTH*.95).toInt, (ChemGame.WINDOW_HEIGHT*(.12+iteration)).toInt)
+      ChemGame.text.drawString(pos._1, pos._2, o._1, Color.blue)
+      iteration+=.13
+      qMapPos.getOrElseUpdate(o._1, pos)
+    }
+    qMap.foreach{a =>
+      qMapPos.foreach{b =>
+        if(a._2 && b._2._2 <= (ChemGame.WINDOW_HEIGHT-Mouse.getY)+(ChemGame.WINDOW_HEIGHT*.03).toInt && b._2._2 >= ChemGame.WINDOW_HEIGHT-Mouse.getY){
+          println("hi")
+        }
+      }
+    }
+  }
 
 }
