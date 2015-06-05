@@ -3,7 +3,7 @@ package core
 import java.awt.Font
 import java.io.FileNotFoundException
 
-import menus.{MainSelect, MenuA}
+import menus._
 import org.lwjgl.LWJGLException
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11._
@@ -99,23 +99,25 @@ object ChemGame{
 
   def render: Unit ={
     glClear(GL_COLOR_BUFFER_BIT)
-    Color.white.bind()
-    if(player) Player.render
     if(mainSelect) MainSelect.render
     if(a) MenuA.render
-    if(b){}
-    if(c){}
+    if(b) MenuB.render
+    if(c) MenuC.render
     if(d){}
     if(e){}
     if(f){}
+    Color.white.bind()
+    if(player) Player.render
   }
 
   def update: Unit ={
-    if(player) Player.update()
     if(mainSelect) MainSelect.update
     if(a) MenuA.update
+    if(b) MenuB.update
+    if(c) MenuC.update
     if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) quit = true
     if(Display.isCloseRequested) quit = true
+    if(player) Player.update()
   }
 
 }

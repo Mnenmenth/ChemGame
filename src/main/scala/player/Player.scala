@@ -17,6 +17,20 @@ object Player{
   var x = (ChemGame.CENTER_WIDTH*.99).toInt
   var y = (ChemGame.WINDOW_HEIGHT-player.getHeight-2).toInt
 
+
+  var finalX = 0
+  var finalY = 0
+
+  def reset: Unit ={
+    mx = 0
+    my = 0
+    pressed = false
+    moving = false
+    x = (ChemGame.CENTER_WIDTH*.99).toInt
+    y = (ChemGame.WINDOW_HEIGHT-player.getHeight-2).toInt
+    moving = true
+  }
+
   def render: Unit ={
     player.draw
   }
@@ -59,6 +73,8 @@ object Player{
 
       println("x: " + x + " x1: " + x1)
       println("y: " + y + " y1: " + y1)
+      finalX = x1
+      finalY = y1
       moving = false
       join
     }}

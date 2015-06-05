@@ -26,15 +26,17 @@ object MainSelect {
   buttonB.setOp({
     ChemGame.mainSelect = false
     ChemGame.b = true
+    ChemGame.player = true
   })
 
   val buttonCRaw = ImageCache.loadImage("Buttons.png").getSubimage(184, 247, 199, 86)
   val buttonCTex = ImageCache.loadTextureFromBuffImg(buttonCRaw)
   val buttonC = new Button(buttonCTex, (ChemGame.WINDOW_WIDTH * .18).toInt, ChemGame.WINDOW_HEIGHT / 8)
   buttonC.setPos((ChemGame.WINDOW_WIDTH * .25).toInt, (ChemGame.WINDOW_HEIGHT * .38).toInt)
-  buttonB.setOp({
+  buttonC.setOp({
     ChemGame.mainSelect = false
     ChemGame.c = true
+    ChemGame.player = true
   })
 
   val buttonDRaw = ImageCache.loadImage("Buttons.png").getSubimage(184, 360, 298, 87)
@@ -44,6 +46,7 @@ object MainSelect {
   buttonD.setOp({
     ChemGame.mainSelect = false
     ChemGame.d = true
+    ChemGame.player = true
   })
 
   val buttonERaw = ImageCache.loadImage("Buttons.png").getSubimage(184, 485, 482, 87)
@@ -53,6 +56,7 @@ object MainSelect {
   buttonE.setOp({
     ChemGame.mainSelect = false
     ChemGame.e = true
+    ChemGame.player = true
   })
 
   val buttonFRaw = ImageCache.loadImage("Buttons.png").getSubimage(184, 590, 176, 86)
@@ -62,6 +66,7 @@ object MainSelect {
   buttonF.setOp({
     ChemGame.mainSelect = false
     ChemGame.f = true
+    ChemGame.player = true
   })
 
   val buttons = Array(buttonA, buttonB, buttonC, buttonD, buttonE, buttonF)

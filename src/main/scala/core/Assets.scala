@@ -2,6 +2,7 @@ package core
 
 import java.awt.image.BufferedImage
 import java.nio.ByteBuffer
+import scala.util.Random
 import javax.imageio.ImageIO
 
 import org.lwjgl.BufferUtils
@@ -11,6 +12,7 @@ import org.lwjgl.opengl.GL12
 import org.newdawn.slick.Color
 import org.newdawn.slick.opengl.{TextureImpl, Texture, TextureLoader}
 import org.newdawn.slick.util.ResourceLoader
+import player.Player
 
 import scala.collection.mutable
 
@@ -107,7 +109,7 @@ class Button(tex: Int, width: Float, height: Float) extends Image(tex, width, he
 }
 
 class Question(question: String){
-
+  var correct = false
   var qMap = mutable.HashMap.empty[String, Boolean]
   var qMapPos = mutable.HashMap.empty[String, (Int, Int)]
 
@@ -115,7 +117,7 @@ class Question(question: String){
   def draw: Unit ={
     var iteration = .13
     TextureImpl.bindNone()
-    ChemGame.text.drawString((ChemGame.CENTER_WIDTH*.75).toInt,ChemGame.WINDOW_HEIGHT/8, question, Color.red)
+    ChemGame.text.drawString(/*(ChemGame.CENTER_WIDTH*.75).toInt*/10,ChemGame.WINDOW_HEIGHT/8, question, Color.red)
     qMap.foreach{o =>
       val pos = ((ChemGame.CENTER_WIDTH*.95).toInt, (ChemGame.WINDOW_HEIGHT*(.12+iteration)).toInt)
       ChemGame.text.drawString(pos._1, pos._2, o._1, Color.blue)
@@ -124,11 +126,22 @@ class Question(question: String){
     }
     qMap.foreach{a =>
       qMapPos.foreach{b =>
-        if(a._2 && b._2._2 <= (ChemGame.WINDOW_HEIGHT-Mouse.getY)+(ChemGame.WINDOW_HEIGHT*.03).toInt && b._2._2 >= ChemGame.WINDOW_HEIGHT-Mouse.getY){
-          println("hi")
+        if(a._1.equals(b._1) && a._2 && b._2._2 >= /*(ChemGame.WINDOW_HEIGHT-Mouse.getY)*/Player.finalY-(ChemGame.WINDOW_HEIGHT*.06).toInt && b._2._2 <= /*ChemGame.WINDOW_HEIGHT-Mouse.getY*/Player.finalY){
+          ChemGame.text.drawString((ChemGame.CENTER_WIDTH*.99).toInt, (ChemGame.WINDOW_HEIGHT*(.12+iteration)).toInt, "Correct!", Color.magenta)
+          correct = true
         }
       }
     }
+  }
+
+}
+
+object RandomGen{
+
+  def gen(array: Array[Question]): Int ={
+    val rand = new Random()
+    val randomQ: Int = rand.nextInt(array.length)
+    randomQ
   }
 
 }
