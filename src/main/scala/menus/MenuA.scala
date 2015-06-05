@@ -138,10 +138,10 @@ object MenuA extends AWTGLCanvas{
   def update: Unit ={
 
     if(done){
+      done = false
       new Thread{override def run(){
-        done = false
-        Player.reset
         Thread.sleep(2000)
+        Player.reset
         ChemGame.player = false
         ChemGame.a = false
         ChemGame.mainSelect = true

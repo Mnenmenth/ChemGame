@@ -38,14 +38,14 @@ object Player{
   def update(): Unit ={
     if(Mouse.isButtonDown(0) && ChemGame.player && !moving){
       pressed = !pressed
-      mx = Mouse.getX.toInt
-      my = Mouse.getY.toInt
+      mx = Mouse.getX
+      my = Mouse.getY
     }
     if(Keyboard.isKeyDown(Keyboard.KEY_UP) && y >= 0) y -= 2
     if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) && y + player.getHeight <= ChemGame.WINDOW_HEIGHT) y += 2
     if(Keyboard.isKeyDown(Keyboard.KEY_LEFT) && x >= 0) x -= 2
     if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && x + player.getWidth <= ChemGame.WINDOW_WIDTH) x += 2
-    if(pressed && ChemGame.player && !moving){
+    if(pressed && ChemGame.player && !moving && menus){
       pressed = !pressed
       moving = true
       moveTo(mx, ChemGame.WINDOW_HEIGHT - my)
@@ -81,6 +81,8 @@ object Player{
     thread.synchronized(true)
     thread.start
   }
+
+  def menus: Boolean = ChemGame.a || ChemGame.b || ChemGame.c || ChemGame.d || ChemGame.e || ChemGame.f
 
   def inXBounds: Boolean = (x + player.getWidth <= ChemGame.WINDOW_WIDTH) && (x >= 0)
   def touchingXBounds: Boolean = (x + player.getWidth == ChemGame.WINDOW_WIDTH) || (x == 0)
