@@ -124,15 +124,16 @@ object MenuA extends AWTGLCanvas{
   val questions = Array(question1, question2, question3, question4, question5, question6, question7, question8, question9, question10,
   question11, question12, question13, question14, question15, question16, question17, question18, question19, question20, question21, question22)
 
-  //val rand = new Random()
-  //val randomQ: Int = rand.nextInt((questions.length-1 - 0) + 1) + 0
   var randomQ = RandomGen.gen(questions)
 
   var done = false
 
   def render: Unit ={
     questions(randomQ).draw
-    if(questions(randomQ).correct) done = true
+    if(questions(randomQ).correct) {
+      done = true
+      questions(randomQ).correct = false
+    }
   }
 
   def update: Unit ={
@@ -141,10 +142,12 @@ object MenuA extends AWTGLCanvas{
       done = false
       new Thread{override def run(){
         Thread.sleep(2000)
+        randomQ = RandomGen.gen(questions)
         Player.reset
         ChemGame.player = false
         ChemGame.a = false
         ChemGame.mainSelect = true
+        randomQ = RandomGen.gen(questions)
         join()
       }}.start()
     }

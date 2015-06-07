@@ -29,25 +29,30 @@ object MenuB {
 
 
   val questions = Array(question1, question2, question3, question4)
-  val randomQ = RandomGen.gen(questions)
+  var randomQ = RandomGen.gen(questions)
 
   var done = false
 
   def render: Unit ={
     questions(randomQ).draw
-    if(questions(randomQ).correct) done = true
+    if(questions(randomQ).correct) {
+      done = true
+      questions(randomQ).correct = false
+    }
   }
 
   def update: Unit ={
 
     if(done){
+      done = false
       new Thread{override def run(){
-        Thread.sleep(4000)
+        Thread.sleep(2000)
+        randomQ = RandomGen.gen(questions)
+        Player.reset
+        ChemGame.player = false
         ChemGame.b = false
         ChemGame.mainSelect = true
-        ChemGame.player = false
-        done = false
-        Player.reset
+        randomQ = RandomGen.gen(questions)
         join()
       }}.start()
     }

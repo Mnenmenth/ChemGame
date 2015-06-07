@@ -62,7 +62,7 @@ object ChemGame{
     glOrtho(0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 1, -1)
     glMatrixMode(GL_MODELVIEW)
     glEnable(GL_TEXTURE_2D)
-    glEnable(GL_SMOOTH)
+//    glEnable(GL_SMOOTH)
     glShadeModel(GL_SMOOTH)
     glDisable(GL_DEPTH_TEST)
     glDisable(GL_LIGHTING)
@@ -103,9 +103,9 @@ object ChemGame{
     if(a) MenuA.render
     if(b) MenuB.render
     if(c) MenuC.render
-    if(d){}
-    if(e){}
-    if(f){}
+    if(d) MenuD.render
+    if(e) MenuE.render
+    if(f) MenuF.render
     Color.white.bind()
     if(player) Player.render
   }
@@ -115,6 +115,9 @@ object ChemGame{
     if(a) MenuA.update
     if(b) MenuB.update
     if(c) MenuC.update
+    if(d) MenuD.update
+    if(e) MenuE.update
+    if(f) MenuF.update
     if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) quit = true
     if(Display.isCloseRequested) quit = true
     if(player) Player.update()

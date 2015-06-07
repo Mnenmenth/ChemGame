@@ -28,7 +28,7 @@ object Player{
     moving = false
     x = (ChemGame.CENTER_WIDTH*.99).toInt
     y = (ChemGame.WINDOW_HEIGHT-player.getHeight-2).toInt
-    moving = true
+
   }
 
   def render: Unit ={
